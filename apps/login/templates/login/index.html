@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login/Register</title>
+
+  </head>
+  <style>
+  .header{
+    font-weight: lighter;
+  }
+  .r_forms{
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    width: 325px;
+    height: 312px;
+    display: inline-block;
+  }
+  tr, td {
+    padding-top: 25px;
+  }
+  .button{
+    margin: 12px 63px 0px 0px;
+    float: right;
+  }
+  .l_forms{
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    display: inline-block;
+    width: 325px;
+    height: 312px;
+  }
+  .register{
+    display: inline-block;
+    /*background-color: black;*/
+  }
+  .login{
+    display: inline-block;
+    margin-left: 45px;
+  }
+  .errors{
+    display: inline-block;
+  }
+  .head p {
+    margin-left: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
+    background-color: white;
+  }
+  </style>
+  <body>
+    <div id="wrapper">
+      <div class="header">
+        <h1>Welcome!</h1>
+      </div>
+      <div class="register">
+        <div class="head">
+          <p>Register</p>
+        </div>
+        <div class="r_forms">
+          <form action='register_user', method="post">
+            {%csrf_token%}
+          <table>
+            <tbody>
+              <tr>
+                <td>Name:</td>
+                <td><input type="text" name="name"></td>
+              </tr>
+              <p></p>
+              <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username"></td>
+              </tr>
+              <p></p>
+              <tr>
+                <td>Password:</td>
+                <td><input type="password" name="rpassw"></td>
+              </tr>
+              <p></p>
+              <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" name="rpassw_confirm"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="button">
+            <input type="submit" name="submit">
+          </div>
+        </div>
+        </form>
+        </div>
+      <div class="login">
+                                            <!-- START LOGIN -->
+        <div class="head">
+          <p>Login</p>
+        </div>
+        <div class="l_forms">
+          <form action='login_user', method="post">
+            {%csrf_token%}
+          <table>
+            <tbody>
+              <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username"></td>
+              </tr>
+              <p></p>
+              <tr>
+                <td>Password:</td>
+                <td><input type="password" name="lpassw"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="button">
+            <input type="submit" name="submit">
+          </div>
+        </div>
+        </form>
+        </div>
+        <div class="errors">
+          {% if messages %}
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+                           <!-- end of wrapper -->
+  </body>
+</html>

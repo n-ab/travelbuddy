@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Planner!</title>
+  </head>
+    <style>
+    #wrapper{
+      margin-right: 0px;
+    }
+
+    .others_travelplans{
+      /*margin-top: 50px;*/
+      /*background-color: lightblue;*/
+      /*height: 400px;*/
+      /*float: right;*/
+      width: 750px;
+      vertical-align: top;
+      display: inline-block;
+    }
+    .your_travelplans{
+      /*background-color: lightyellow;*/
+      width: 750px;
+      float: left;
+      display: inline-block;
+      vertical-align: top;
+
+    }
+    .hleft{
+      display: inline-block;
+    }
+    .hright{
+      display: inline-block;
+      float: right;
+    }
+    body {
+        padding:3%;
+    }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+    }
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    input {
+      margin: 1%;
+      padding: 1% 2%;
+    }
+    </style>
+  <body>
+    <div id="wrapper">
+        <div class="header">
+            <div class="hleft">
+              {% for user in user_list %}
+                <h1>Welcome, {{ user.name }}!</h1>
+                {% endfor %}
+            </div>
+            <div class="hright">
+              <form action="logout_user", method="post">
+                {%csrf_token%}
+                  <button>Logout</button>
+              </form>
+              <p></p>
+              <form action="home/add", method="post">
+                {%csrf_token%}
+                  <button>Add Travel Plan!</button>
+              </form>
+            </div>
+        </div>
+        <div class="others_travelplans">
+          <h3>Your Trip Schedules:</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Destination</th>
+                  <th>Travel Start Date</th>
+                  <th>Travel End Date</th>
+                  <th>Plan</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if user.id is session.user.id %}
+                  {% for destination in travel_list %}
+                <tr>
+                  <td><a href="home/trip_info/{{ destination.id }}">{{ destination.name }}</a></td>
+                  <td>{{ destination.desc }}</td>
+                  <td>{{ destination.td_from }}</td>
+                  <td>{{ destination.td_to }}</td>
+                </tr>
+                  {% endfor %}
+                {% endif %}
+              </tbody>
+            </table>
+        </div>
+        <div class="your_travelplans">
+          <h3>Other User's Travel Plans: </h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Destination</th>
+                  <th>Travel Start Date</th>
+                  <th>Travel End Date</th>
+                  <th>Do You Want to Join?</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for destination in travel_list %}
+                <tr>
+                  <td><a href="home/trip_info/{{ destination.id }}">{{ destination.name }}</a></td>
+                  <td>{{ destination.desc }}</td>
+                  <td>{{ destination.td_from }}</td>
+                  <td>{{ destination.td_to }}</td>
+                  <td><a href="home">Join</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+  </body>
+</html>
